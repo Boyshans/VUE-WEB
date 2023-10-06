@@ -1,0 +1,185 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>    
+</head>
+
+<body>
+  <header class="z-10 sticky top-0 bg-blue-700 py-5">
+    <!-- header-->
+    <nav class="bg-blue-700 w-9/12 mx-auto flex flex-row items-center justify-between">
+        <div class="uppercase text-lg basis-1/4">
+            <a href="">
+                <span id="Halo" class="font-extrabold text-black">Made</span>
+                <span class="font-extrabold text-white">Hanura</span>
+            </a>
+        </div>
+
+        <div class="text-white basis-1/2 flex place-items-end justify-evenly">
+         
+            <!-- Di vue-project.html -->
+
+           <a href="http://127.0.0.1:5500/public/index.html">
+              Kembali ke Dashboard</a>
+
+            <a href="#games" class="text-xl font-semibold">
+                <span>Portofolio</span>
+            </a>
+            <a href="#Contact" class="text-xl font-semibold">
+                <span>Contact</span>
+            </a>
+            <a href="#Project" class="text-xl font-semibold text-black">
+              <span>Vue-Project</span>
+          </a>
+
+        </div>
+    </nav>
+</header>
+</body>
+
+
+  <body>
+    <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8" id="app">
+        <div class="flex flex-wrap my-5 -mx-2">
+
+            <div class="w-full lg:w-3/5 min-h-screen lg:p-10 flex flex-col h-[200px]">
+                <!-- Konten untuk "product" -->
+                <h1 class="text-center">Product Section</h1>
+
+                <div class="mt-14 px-8 grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-1 lg:grid-cols-2 md:gap-x-4 xl:gap-x-4">
+                    <div v-for="(product, index) in products" :key="index" class="rounded-lg max-w-md overflow-hidden  bg-white shadow-md dark:bg-slate-100 text-center hover:shadow-2xl">
+                        <!-- Card image -->
+                        <a href="#!">
+                            <img class="rounded-t-lg w-full h-40 object-cover" :src="product.image" alt="" />
+                        </a>
+
+                        <!-- Card body -->
+                        <div class="p-6">
+                            <!-- Title -->
+                            <h5 class="mb-2 text-lg font-semibold tracking-wide dark:text-blue-700">
+                                {{ product.name }}
+                            </h5>
+
+                            <!-- Button -->
+                            <a href="#" @click="addToCart(product)"
+                                class="mt-3 inline-block rounded bg-blue-700 px-4 py-2 text-sm font-medium uppercase leading-normal text-white shadow-md transition duration-150 ease-in-out hover:bg-blue-600 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-300 dark:shadow-lg dark:hover:shadow-md dark:focus:shadow-md dark:active:shadow-md">
+                                {{product.price}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full lg:w-2/5 shadow-lg lg:p-5 flex flex-col">
+                <div class="text-center">
+                    <h1 class="text-center mt-5">Carting Section</h1>
+                    <!-- Masukkan konten "carting" Anda di sini -->
+                </div>
+
+                <div class="flex flex-row items-center justify-between px-5 mt-5 border-b-2">
+                    <div>
+                        <span class="font-bold text-xl">Current Order</span>
+                    </div>
+
+                    <div class="font-semibold my-4">
+                        <a href="#" @click="clearCart()">
+                            <span class="px-4 py-2 rounded-md bg-blue-700 text-white">Clear ALL</span>
+                        </a>
+                    </div>
+                </div>
+
+          <!-- Table responsive wrapper -->
+          <div class="overflow-x-auto bg-white dark:bg-slate-100 h-[270px] overflow-y-scroll">
+            <table class="min-w-full text-left text-sm whitespace-nowrap">
+              <thead class="uppercase tracking-wider sticky top-0 bg-white dark:bg-slate-50 outline outline-2 outline-neutral-200 dark:outline-neutral-600">
+                <tr>
+                  <th scope="col" class="px-6 py-4">
+                    Product
+                  </th>
+                  <th scope="col" class="px-6 py-4">
+                    Price
+                  </th>
+                  <th scope="col" class="px-6 py-4">
+                    Quantity
+                  </th>
+                  <th scope="col" class="px-6 py-4">
+                    Total
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(item, index) in cart" :key="index" class="border-b dark:border-slate-500 ">
+                  <td class="px-6 py-4 text-blue-700">
+                    {{ item.name }}
+                  </td>
+                  <td class="px-6 py-4">RP{{ item.price.toFixed(2) }}</td>
+                  <td class="px-6 py-4">{{ item.quantity }}</td>
+                  <td class="px-6 py-4">RP {{ (item.quantity * item.price).toFixed(2) }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+
+    <script>
+      const { createApp, ref } = Vue;
+
+      const app = createApp({
+                data() {
+                  return {
+                    products: [
+                      {
+                        name: 'BURGER',
+                        image: 'MENU/Burger.jpg',
+                        price: 'RP30.000', // Tambahkan harga untuk Product 1
+                      },
+                      {
+                        name: 'PIZZA',
+                        image: 'MENU/hawaiian-pizza.jpg',
+                        price: 'RP45.000', // Tambahkan harga untuk Product 2
+                      },
+                      {
+                        name: 'FRENCH FRIES',
+                        image: 'MENU/french-fries.jpg',
+                        price: 'RP30.000', // Tambahkan harga untuk Product 3
+                      },
+                      {
+                        name: 'CHCKEN LEG',
+                        image: 'MENU/CHICKEN LEG.jpg',
+                        price: 'RP25.000', // Tambahkan harga untuk Product 4
+                      },
+                    ],
+                    cart: [], // Menyimpan item yang ditambahkan ke keranjang
+                  };
+                },
+                methods: {
+                addToCart(product) {
+                  // Cek apakah produk sudah ada di keranjang
+                  const existingItem = this.cart.find(item => item.name === product.name);
+
+                  if (existingItem) {
+                    // Jika sudah ada, tingkatkan jumlahnya
+                    existingItem.quantity++;
+                  } else {
+                    // Jika belum ada, tambahkan produk ke keranjang
+                    const price = parseFloat(product.price.replace('RP', '').replace('.', '').replace(',', ''));
+                    this.cart.push({ name: product.name, quantity: 1, price });
+                  }
+                },
+                clearCart() {
+                  // Hapus semua item dari keranjang
+                  this.cart = [];
+                },
+              },
+              });
+
+
+      app.mount('#app');
+  </script>
+        
+ </div>
+ </body>
+ </html>
